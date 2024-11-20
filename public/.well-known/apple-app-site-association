@@ -1,0 +1,21 @@
+{
+  "appclips": {
+    "apps": [
+      "U3TS5VT3H8.org.realitydeslab.holoweb.Clip"
+    ]
+  },
+  "applinks": {
+      "details": [
+        {
+            "appIDs": ["U3TS5VT3H8.org.realitydeslab.holoweb"],
+            "components": [
+                {
+                    "/": "/launch",
+                    "?": { "url": "????" },
+                    "comment": "Matches any URL with a path that starts with /launch?="
+                }
+            ]
+        }
+      ]
+  }
+}
