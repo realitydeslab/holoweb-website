@@ -10,9 +10,9 @@
             "appIDs": ["U3TS5VT3H8.org.realitydeslab.holoweb"],
             "components": [
                 {
-                    "/": "/launch",
+                    "/": "/launch/*",
                     "?": { "url": "????" },
-                    "comment": "Matches any URL with a path that starts with /launch?="
+                    "comment": "Matches any URL with a path that starts with /launch/?url="
                 }
             ]
         }
