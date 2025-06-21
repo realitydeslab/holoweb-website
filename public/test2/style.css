@@ -1,6 +1,7 @@
 #unity-container {
   width: 720px;
-  height: 405px
+  height: 405px;
+    background-color: transparent;
 }
 
 #unity-loading {
@@ -10,6 +11,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+    background-color: transparent;
 }
 
 #unity-canvas {
