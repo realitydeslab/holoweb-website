@@ -7,7 +7,7 @@ import { hues, httpsHost, launchHref, sitePath } from "@/lib/links";
 import QrCode from "./QrCode";
 import s from "./Gallery.module.css";
 
-export type CardEntry = GalleryEntry & { qr: QrPath };
+export type CardEntry = GalleryEntry & { qr: QrPath; appClipCode: string | null };
 
 const ALL = "All";
 
@@ -43,7 +43,7 @@ export default function Gallery({ entries }: { entries: CardEntry[] }) {
           aria-pressed={allQr}
           onClick={() => setAllQr((v) => !v)}
         >
-          <QrGlyph /> {allQr ? "Hide QR codes" : "Show QR codes"}
+          <QrGlyph /> {allQr ? "Hide codes" : "Show codes"}
         </button>
       </div>
       <p className="visually-hidden" aria-live="polite">
@@ -62,6 +62,8 @@ type CardProps = { entry: CardEntry; index: number; onTag: (t: string) => void; 
 
 function Card({ entry: e, index, onTag, forceQr }: CardProps) {
   const [qrOpen, setQrOpen] = useState(false);
+  const [kind, setKind] = useState<"clip" | "qr">("clip");
+  const clip = e.appClipCode && kind === "clip" ? e.appClipCode : null;
   const showQr = qrOpen || forceQr;
   const host = httpsHost(e.url);
   const [h1, h2] = hues(e.id);
@@ -84,8 +86,24 @@ function Card({ entry: e, index, onTag, forceQr }: CardProps) {
         {e.thumbnail && <span className={`${s.renderer} mono`}>{e.renderer}</span>}
         {showQr && (
           <div className={s.qrPanel}>
-            <QrCode qr={e.qr} className={s.qr} label={`QR code that opens ${e.title} in HoloWeb`} />
-            <span className={s.qrCaption}>Scan with iPhone camera</span>
+            {clip ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={sitePath(clip)} className={s.qr} alt={`App Clip Code that opens ${e.title} in HoloWeb`} />
+            ) : (
+              <QrCode qr={e.qr} className={s.qr} label={`QR code that opens ${e.title} in HoloWeb`} />
+            )}
+            {e.appClipCode ? (
+              <span className={s.kinds} role="group" aria-label="Code type">
+                <button type="button" aria-pressed={kind === "clip"} onClick={() => setKind("clip")}>
+                  App Clip Code
+                </button>
+                <button type="button" aria-pressed={kind === "qr"} onClick={() => setKind("qr")}>
+                  QR
+                </button>
+              </span>
+            ) : (
+              <span className={s.qrCaption}>Scan with iPhone camera</span>
+            )}
           </div>
         )}
         {!forceQr && (
@@ -93,7 +111,7 @@ function Card({ entry: e, index, onTag, forceQr }: CardProps) {
             type="button"
             className={s.qrButton}
             aria-pressed={qrOpen}
-            aria-label={qrOpen ? `Hide QR code for ${e.title}` : `Show QR code for ${e.title}`}
+            aria-label={qrOpen ? `Hide code for ${e.title}` : `Show scan code for ${e.title}`}
             onClick={() => setQrOpen((v) => !v)}
           >
             {qrOpen ? "✕" : <QrGlyph />}

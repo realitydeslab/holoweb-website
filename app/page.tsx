@@ -1,7 +1,8 @@
 import type { CSSProperties } from "react";
 import { loadGallery } from "@/lib/gallery";
-import { absoluteLaunchUrl } from "@/lib/links";
+import { appClipUrl } from "@/lib/links";
 import { qrPath } from "@/lib/qr";
+import { appClipCodeImage, loadShortLinks } from "@/lib/shortlinks";
 import Gallery from "./components/Gallery";
 import LinkBuilder from "./components/LinkBuilder";
 import s from "./home.module.css";
@@ -10,7 +11,11 @@ const delay = (i: number) => ({ "--i": i }) as CSSProperties;
 
 export default function Home() {
   // QR codes are computed at build time so they are in the static HTML.
-  const entries = loadGallery().map((e) => ({ ...e, qr: qrPath(absoluteLaunchUrl(e.url)) }));
+  const short = loadShortLinks();
+  const entries = loadGallery().map((e) => {
+    const code = short.find((l) => l.id === e.id && l.url === e.url)?.code ?? null;
+    return { ...e, qr: qrPath(appClipUrl(e.url)), appClipCode: code ? appClipCodeImage(code) : null };
+  });
   return (
     <>
       <header className={`wrap ${s.hero}`}>
@@ -52,7 +57,11 @@ export default function Home() {
               <code className="mono">navigator.xr</code> works in HoloWeb, with no SDK and no changes to the page. Share
               it with a link in this format:
             </p>
-            <p className="code">holoweb.app/launch?url=&lt;percent-encoded page URL&gt;</p>
+            <p className="code">holoweb.app/c?url=&lt;percent-encoded page URL&gt;</p>
+            <p>
+              Scanning it as a QR code opens the App Clip. <span className="mono">holoweb.app/launch?url=</span> works
+              the same way for links people tap.
+            </p>
             <p>
               To have it listed here,{" "}
               <a href="https://github.com/realitydeslab/holoweb-website/issues">open an issue on GitHub</a> with the

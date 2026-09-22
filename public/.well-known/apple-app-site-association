@@ -2,17 +2,49 @@
   "applinks": {
     "details": [
       {
-        "appIDs": ["KR9H35SQQ9.org.realitydeslab.holoweb"],
+        "appIDs": [
+          "KR9H35SQQ9.org.realitydeslab.holoweb"
+        ],
         "components": [
-          { "/": "/launch", "?": { "url": "?*" }, "comment": "holoweb.app/launch?url=<page>" },
-          { "/": "/launch/", "?": { "url": "?*" }, "comment": "trailing-slash variant from static export" },
-          { "/": "/c", "?": { "url": "?*" }, "comment": "holoweb.app/c?url=<page>" },
-          { "/": "/c/", "?": { "url": "?*" }, "comment": "trailing-slash variant from static export" }
+          {
+            "/": "/launch",
+            "?": {
+              "url": "?*"
+            },
+            "comment": "holoweb.app/launch?url=<page>"
+          },
+          {
+            "/": "/launch/",
+            "?": {
+              "url": "?*"
+            },
+            "comment": "trailing-slash variant from static export"
+          },
+          {
+            "/": "/c",
+            "?": {
+              "url": "?*"
+            },
+            "comment": "holoweb.app/c?url=<page>"
+          },
+          {
+            "/": "/c/",
+            "?": {
+              "url": "?*"
+            },
+            "comment": "trailing-slash variant from static export"
+          },
+          {
+            "/": "/c/*",
+            "comment": "App Clip Code short links holoweb.app/c/<code>"
+          }
         ]
       }
     ]
   },
   "appclips": {
-    "apps": ["KR9H35SQQ9.org.realitydeslab.holoweb.Clip"]
+    "apps": [
+      "KR9H35SQQ9.org.realitydeslab.holoweb.Clip"
+    ]
   }
 }

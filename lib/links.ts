@@ -3,9 +3,11 @@
 /** Canonical origin for links that leave the site (QR codes, copied links). App Clip invocation needs this domain. */
 export const SITE_ORIGIN = "https://holoweb.app";
 
-/** Absolute HoloWeb invocation link, the form to put in QR codes and share. */
-export function absoluteLaunchUrl(url: string): string {
-  return `${SITE_ORIGIN}/launch?url=${encodeURIComponent(url)}`;
+/** App Clip invocation link, the form for QR codes and sharing. The App Clip experience in
+ *  App Store Connect is registered for the https://holoweb.app/c prefix, so the camera shows the
+ *  App Clip card for these; /launch links only work as taps. */
+export function appClipUrl(url: string): string {
+  return `${SITE_ORIGIN}/c?url=${encodeURIComponent(url)}`;
 }
 
 /** HoloWeb invocation link for a page: opens the App Clip on iPhone, or the page directly inside the app. */
@@ -37,4 +39,9 @@ export function httpsHost(url: string | null): string | null {
   } catch {
     return null;
   }
+}
+
+/** Short App Clip link for a code from content/shortlinks.json. */
+export function shortUrl(code: string): string {
+  return `${SITE_ORIGIN}/c/${code}`;
 }

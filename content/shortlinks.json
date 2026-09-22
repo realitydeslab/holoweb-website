@@ -1,0 +1,62 @@
+{
+  "1": {
+    "id": "supersplat-micro-pc",
+    "url": "https://superspl.at/s?id=5c0f892e&webgl"
+  },
+  "2": {
+    "id": "needle-physics-playground",
+    "url": "https://physics-playground-zubcksgtkqf.needle.run/"
+  },
+  "3": {
+    "id": "needle-snow-globe",
+    "url": "https://snowglobe-zubckszvui3a.needle.run/"
+  },
+  "4": {
+    "id": "needle-musical-instrument",
+    "url": "https://musicalinstrument-zubcksz1usd7h.needle.run/"
+  },
+  "5": {
+    "id": "needle-collaborative-sandbox",
+    "url": "https://collaborativesandbox-zubcks1qdkhy.needle.run/"
+  },
+  "6": {
+    "id": "needle-diamond-ring",
+    "url": "https://jewelry-ring-zubckszopxdy.needle.run/"
+  },
+  "7": {
+    "id": "playcanvas-ar-starter",
+    "url": "https://playcanv.as/p/AOYF3YyG/"
+  },
+  "8": {
+    "id": "model-viewer-ar",
+    "url": "https://modelviewer.dev/examples/augmentedreality/"
+  },
+  "9": {
+    "id": "aframe-model-viewer",
+    "url": "https://aframe.io/aframe/examples/showcase/model-viewer/"
+  },
+  "10": {
+    "id": "three-xr-ballshooter",
+    "url": "https://threejs.org/examples/webxr_xr_ballshooter.html"
+  },
+  "11": {
+    "id": "three-ar-lighting",
+    "url": "https://threejs.org/examples/webxr_ar_lighting.html"
+  },
+  "12": {
+    "id": "babylon-measure-tape",
+    "url": "https://playground.babylonjs.com/full.html#GG06BQ#97"
+  },
+  "13": {
+    "id": "toji-webxr-particles",
+    "url": "https://toji.github.io/webxr-particles/"
+  },
+  "14": {
+    "id": "iw-hit-test",
+    "url": "https://immersive-web.github.io/webxr-samples/hit-test.html"
+  },
+  "15": {
+    "id": "iw-webgpu-ar",
+    "url": "https://immersive-web.github.io/webxr-samples/webgpu/immersive-ar-session.html"
+  }
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { absoluteLaunchUrl, httpsHost } from "@/lib/links";
+import { appClipUrl, httpsHost } from "@/lib/links";
 import { qrPath } from "@/lib/qr";
 import QrCode from "./QrCode";
 import s from "./LinkBuilder.module.css";
@@ -11,7 +11,7 @@ export default function LinkBuilder() {
   const [url, setUrl] = useState("");
   const [copied, setCopied] = useState(false);
   const valid = httpsHost(url.trim()) !== null;
-  const link = valid ? absoluteLaunchUrl(url.trim()) : "";
+  const link = valid ? appClipUrl(url.trim()) : "";
 
   async function copy() {
     try {

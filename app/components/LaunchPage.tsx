@@ -2,18 +2,26 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import { absoluteLaunchUrl, sitePath } from "@/lib/links";
+import { appClipUrl, sitePath } from "@/lib/links";
 import { qrPath } from "@/lib/qr";
 import QrCode from "./QrCode";
 import s from "./LaunchPage.module.css";
 
-type Known = { url: string; title: string; author: string };
+export type Known = { url: string; title: string; author: string };
 
-/** Landing page for HoloWeb invocation links (`/launch?url=` and `/c?url=`).
+type ViewProps = {
+  target: string | null;
+  known: Known[];
+  /** Link encoded in the QR code; defaults to the /launch form of the target. */
+  shareUrl?: string;
+  /** App Clip Code image to show next to the QR code, when one exists. */
+  appClipCode?: string | null;
+};
+
+/** Landing page for HoloWeb invocation links (`/launch?url=`, `/c?url=` and `/c/<code>`).
  *  On iPhone the App Clip card or the installed app takes over; elsewhere this page explains
  *  what the link is and where it points. */
-function LaunchBody({ known }: { known: Known[] }) {
-  const target = useSearchParams().get("url");
+export function LaunchView({ target, known, shareUrl, appClipCode }: ViewProps) {
   let parsed: URL | null = null;
   try {
     if (target) {
@@ -31,7 +39,7 @@ function LaunchBody({ known }: { known: Known[] }) {
         <h1 className={s.title}>This link has no page to open</h1>
         <p className={s.note}>
           A HoloWeb link needs a <code className="mono">url</code> parameter with a full https:// address, like{" "}
-          <span className={`mono ${s.path}`}>holoweb.app/launch?url=https%3A%2F%2Fexample.com%2Far.html</span>.
+          <span className={`mono ${s.path}`}>holoweb.app/c?url=https%3A%2F%2Fexample.com%2Far.html</span>.
         </p>
       </Shell>
     );
@@ -55,17 +63,25 @@ function LaunchBody({ known }: { known: Known[] }) {
         with no install, handheld or in a HoloKit&nbsp;X headset. Requires iOS 27 or later.
       </p>
       <div className={s.scan}>
+        {appClipCode && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img className={s.qr} src={sitePath(appClipCode)} alt={`App Clip Code that opens ${parsed.host} in HoloWeb`} />
+        )}
         <QrCode
-          qr={qrPath(absoluteLaunchUrl(parsed.href))}
+          qr={qrPath(shareUrl ?? appClipUrl(parsed.href))}
           className={s.qr}
           label={`QR code that opens ${parsed.host} in HoloWeb`}
         />
         <p>
-          <strong>On a computer?</strong> Scan this with your iPhone camera to open it there.
+          <strong>On a computer?</strong> Scan with your iPhone camera to open it there.
         </p>
       </div>
     </Shell>
   );
+}
+
+function FromQuery({ known }: { known: Known[] }) {
+  return <LaunchView target={useSearchParams().get("url")} known={known} />;
 }
 
 function Shell({ children }: { children: React.ReactNode }) {
@@ -91,7 +107,7 @@ export default function LaunchPage({ known }: { known: Known[] }) {
         </Shell>
       }
     >
-      <LaunchBody known={known} />
+      <FromQuery known={known} />
     </Suspense>
   );
 }
