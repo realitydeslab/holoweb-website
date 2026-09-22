@@ -1,5 +1,7 @@
 import type { CSSProperties } from "react";
 import { loadGallery } from "@/lib/gallery";
+import { absoluteLaunchUrl } from "@/lib/links";
+import { qrPath } from "@/lib/qr";
 import Gallery from "./components/Gallery";
 import LinkBuilder from "./components/LinkBuilder";
 import s from "./home.module.css";
@@ -7,7 +9,8 @@ import s from "./home.module.css";
 const delay = (i: number) => ({ "--i": i }) as CSSProperties;
 
 export default function Home() {
-  const entries = loadGallery();
+  // QR codes are computed at build time so they are in the static HTML.
+  const entries = loadGallery().map((e) => ({ ...e, qr: qrPath(absoluteLaunchUrl(e.url)) }));
   return (
     <>
       <header className={`wrap ${s.hero}`}>

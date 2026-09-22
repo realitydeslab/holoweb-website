@@ -68,3 +68,36 @@
 .note strong {
   color: var(--ink);
 }
+
+.scan {
+  display: none;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.scan p {
+  margin: 0;
+}
+
+.scan strong {
+  color: var(--ink);
+}
+
+.qr {
+  width: 132px;
+  height: 132px;
+  flex-shrink: 0;
+  border-radius: 6px;
+}
+
+/* Only where there is a mouse: on a phone the QR code would point at itself. */
+@media (hover: hover) and (pointer: fine) {
+  .scan {
+    display: flex;
+  }
+}

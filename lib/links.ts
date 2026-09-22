@@ -1,5 +1,13 @@
 // Browser-safe helpers shared by server and client components (no fs imports here).
 
+/** Canonical origin for links that leave the site (QR codes, copied links). App Clip invocation needs this domain. */
+export const SITE_ORIGIN = "https://holoweb.app";
+
+/** Absolute HoloWeb invocation link, the form to put in QR codes and share. */
+export function absoluteLaunchUrl(url: string): string {
+  return `${SITE_ORIGIN}/launch?url=${encodeURIComponent(url)}`;
+}
+
 /** HoloWeb invocation link for a page: opens the App Clip on iPhone, or the page directly inside the app. */
 export function launchHref(url: string): string {
   return sitePath(`/launch?url=${encodeURIComponent(url)}`);

@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { httpsHost } from "@/lib/links";
+import { absoluteLaunchUrl, httpsHost } from "@/lib/links";
+import { qrPath } from "@/lib/qr";
+import QrCode from "./QrCode";
 import s from "./LinkBuilder.module.css";
 
 /** Turns a page URL into a holoweb.app/launch link. */
@@ -9,7 +11,7 @@ export default function LinkBuilder() {
   const [url, setUrl] = useState("");
   const [copied, setCopied] = useState(false);
   const valid = httpsHost(url.trim()) !== null;
-  const link = valid ? `https://holoweb.app/launch?url=${encodeURIComponent(url.trim())}` : "";
+  const link = valid ? absoluteLaunchUrl(url.trim()) : "";
 
   async function copy() {
     try {
@@ -41,6 +43,12 @@ export default function LinkBuilder() {
       <output htmlFor="page-url" className={`${s.out} mono`} aria-live="polite">
         {valid ? link : url.trim() ? "Enter a full https:// URL" : "Your HoloWeb link appears here"}
       </output>
+      {valid && (
+        <div className={s.scan}>
+          <QrCode qr={qrPath(link)} className={s.qr} label="QR code for this HoloWeb link" />
+          <span>Scan with your iPhone camera to test it.</span>
+        </div>
+      )}
       <button type="button" className="btn btn-primary" disabled={!valid} onClick={copy}>
         {copied ? "Copied" : "Copy link"}
       </button>

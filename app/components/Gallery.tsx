@@ -2,14 +2,19 @@
 
 import { useMemo, useState, type CSSProperties } from "react";
 import type { GalleryEntry } from "@/lib/gallery";
+import type { QrPath } from "@/lib/qr";
 import { hues, httpsHost, launchHref, sitePath } from "@/lib/links";
+import QrCode from "./QrCode";
 import s from "./Gallery.module.css";
+
+export type CardEntry = GalleryEntry & { qr: QrPath };
 
 const ALL = "All";
 
 /** Tag filter plus experience grid. Filtering is local state only, so it works without the router. */
-export default function Gallery({ entries }: { entries: GalleryEntry[] }) {
+export default function Gallery({ entries }: { entries: CardEntry[] }) {
   const [tag, setTag] = useState(ALL);
+  const [allQr, setAllQr] = useState(false);
 
   const tags = useMemo(() => {
     const counts = new Map<string, number>();
@@ -21,8 +26,8 @@ export default function Gallery({ entries }: { entries: GalleryEntry[] }) {
 
   return (
     <>
-      <div className={s.filterBar} role="group" aria-label="Filter by tag">
-        <div className={s.filters}>
+      <div className={s.filterBar}>
+        <div className={s.filters} role="group" aria-label="Filter by tag">
           <button type="button" className="chip" aria-pressed={tag === ALL} onClick={() => setTag(ALL)}>
             {ALL} <span className="count">{entries.length}</span>
           </button>
@@ -32,20 +37,32 @@ export default function Gallery({ entries }: { entries: GalleryEntry[] }) {
             </button>
           ))}
         </div>
+        <button
+          type="button"
+          className={`chip ${s.qrToggle}`}
+          aria-pressed={allQr}
+          onClick={() => setAllQr((v) => !v)}
+        >
+          <QrGlyph /> {allQr ? "Hide QR codes" : "Show QR codes"}
+        </button>
       </div>
       <p className="visually-hidden" aria-live="polite">
         {tag === ALL ? `Showing all ${shown.length} experiences` : `Showing ${shown.length} tagged ${tag}`}
       </p>
       <ul className={s.grid}>
         {shown.map((e, i) => (
-          <Card key={e.id} entry={e} index={i} onTag={setTag} />
+          <Card key={e.id} entry={e} index={i} onTag={setTag} forceQr={allQr} />
         ))}
       </ul>
     </>
   );
 }
 
-function Card({ entry: e, index, onTag }: { entry: GalleryEntry; index: number; onTag: (t: string) => void }) {
+type CardProps = { entry: CardEntry; index: number; onTag: (t: string) => void; forceQr: boolean };
+
+function Card({ entry: e, index, onTag, forceQr }: CardProps) {
+  const [qrOpen, setQrOpen] = useState(false);
+  const showQr = qrOpen || forceQr;
   const host = httpsHost(e.url);
   const [h1, h2] = hues(e.id);
   return (
@@ -65,6 +82,23 @@ function Card({ entry: e, index, onTag }: { entry: GalleryEntry; index: number; 
           </div>
         )}
         {e.thumbnail && <span className={`${s.renderer} mono`}>{e.renderer}</span>}
+        {showQr && (
+          <div className={s.qrPanel}>
+            <QrCode qr={e.qr} className={s.qr} label={`QR code that opens ${e.title} in HoloWeb`} />
+            <span className={s.qrCaption}>Scan with iPhone camera</span>
+          </div>
+        )}
+        {!forceQr && (
+          <button
+            type="button"
+            className={s.qrButton}
+            aria-pressed={qrOpen}
+            aria-label={qrOpen ? `Hide QR code for ${e.title}` : `Show QR code for ${e.title}`}
+            onClick={() => setQrOpen((v) => !v)}
+          >
+            {qrOpen ? "✕" : <QrGlyph />}
+          </button>
+        )}
       </div>
       <div className={s.body}>
         <h3 className={s.title}>{e.title}</h3>
@@ -98,5 +132,13 @@ function Card({ entry: e, index, onTag }: { entry: GalleryEntry; index: number; 
         </div>
       </div>
     </li>
+  );
+}
+
+function QrGlyph() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor">
+      <path d="M1 1h6v6H1zm2 2v2h2V3zm6-2h6v6H9zm2 2v2h2V3zM1 9h6v6H1zm2 2v2h2v-2zm6-2h2v2H9zm4 0h2v2h-2zm-2 2h2v2h-2zm-2 2h2v2H9zm4 0h2v2h-2z" />
+    </svg>
   );
 }

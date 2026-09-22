@@ -8,9 +8,14 @@
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .filters {
+  flex: 1;
+  min-width: 0;
   display: flex;
   gap: 8px;
   overflow-x: auto;
@@ -142,4 +147,82 @@
   flex-wrap: wrap;
   gap: 0 18px;
   font-size: 14px;
+}
+
+/* QR codes: per-card toggle on every device; the show-all toggle only where a big screen is likely. */
+.qrToggle {
+  display: none;
+  flex-shrink: 0;
+}
+
+@media (min-width: 900px) and (hover: hover) and (pointer: fine) {
+  .qrToggle {
+    display: inline-flex;
+  }
+}
+
+.qrButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font: inherit;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.qrButton[aria-pressed="true"] {
+  background: #fff;
+  color: #000;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.qrPanel {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #fff;
+  color: #111;
+  animation: qrIn 0.18s ease-out both;
+}
+
+.qr {
+  height: 82%;
+  width: auto;
+  aspect-ratio: 1;
+  display: block;
+}
+
+.qrCaption {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  margin-top: -6px;
+}
+
+@keyframes qrIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qrPanel {
+    animation: none;
+  }
 }

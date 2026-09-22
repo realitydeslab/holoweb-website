@@ -2,7 +2,9 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import { sitePath } from "@/lib/links";
+import { absoluteLaunchUrl, sitePath } from "@/lib/links";
+import { qrPath } from "@/lib/qr";
+import QrCode from "./QrCode";
 import s from "./LaunchPage.module.css";
 
 type Known = { url: string; title: string; author: string };
@@ -52,6 +54,16 @@ function LaunchBody({ known }: { known: Known[] }) {
         <strong>On iPhone,</strong> open this link in Safari to get the HoloWeb App Clip card. It runs the page in AR
         with no install, handheld or in a HoloKit&nbsp;X headset. Requires iOS 27 or later.
       </p>
+      <div className={s.scan}>
+        <QrCode
+          qr={qrPath(absoluteLaunchUrl(parsed.href))}
+          className={s.qr}
+          label={`QR code that opens ${parsed.host} in HoloWeb`}
+        />
+        <p>
+          <strong>On a computer?</strong> Scan this with your iPhone camera to open it there.
+        </p>
+      </div>
     </Shell>
   );
 }
