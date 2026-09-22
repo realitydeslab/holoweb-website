@@ -1,0 +1,47 @@
+[
+  {
+    "id": "immersive-web-ar-session",
+    "title": "Immersive AR Session",
+    "author": "Immersive Web Working Group",
+    "url": "https://immersive-web.github.io/webxr-samples/immersive-ar-session.html",
+    "sourceUrl": "https://github.com/immersive-web/webxr-samples",
+    "description": "The reference immersive-ar sample: a floating solar system rendered over the camera feed.",
+    "tags": ["sample", "basics"],
+    "renderer": "WebGL",
+    "requiresFeatures": ["local"],
+    "license": "MIT",
+    "verifiedAt": "2026-09-22",
+    "notes": "",
+    "thumbnail": null
+  },
+  {
+    "id": "immersive-web-hit-test",
+    "title": "Hit Test",
+    "author": "Immersive Web Working Group",
+    "url": "https://immersive-web.github.io/webxr-samples/hit-test.html",
+    "sourceUrl": "https://github.com/immersive-web/webxr-samples",
+    "description": "Place sunflowers on real surfaces by tapping where the reticle lands.",
+    "tags": ["sample", "hit-test"],
+    "renderer": "WebGL",
+    "requiresFeatures": ["local", "hit-test"],
+    "license": "MIT",
+    "verifiedAt": "2026-09-22",
+    "notes": "",
+    "thumbnail": null
+  },
+  {
+    "id": "threejs-ar-cones",
+    "title": "Cones",
+    "author": "three.js authors",
+    "url": "https://threejs.org/examples/webxr_ar_cones.html",
+    "sourceUrl": "https://github.com/mrdoob/three.js/blob/dev/examples/webxr_ar_cones.html",
+    "description": "Tap to drop colored cones in front of you. A minimal three.js AR starter.",
+    "tags": ["three.js", "basics"],
+    "renderer": "three.js",
+    "requiresFeatures": ["local"],
+    "license": "MIT",
+    "verifiedAt": "2026-09-22",
+    "notes": "",
+    "thumbnail": null
+  }
+]

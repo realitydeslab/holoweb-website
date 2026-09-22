@@ -1,0 +1,300 @@
+[
+  {
+    "id": "supersplat-micro-pc",
+    "title": "Very Hi-Res Micro PC (Gaussian splat)",
+    "author": "William Beck, viewer by PlayCanvas (SuperSplat)",
+    "url": "https://superspl.at/s?id=5c0f892e&webgl",
+    "sourceUrl": "https://github.com/playcanvas/supersplat-viewer",
+    "description": "A photoreal Gaussian-splat capture of an 18 cm mini PC, shot with a 100 MP camera. Tap the AR icon to place the splat on your desk and walk around it.",
+    "tags": [
+      "gaussian-splats",
+      "model-viewer",
+      "art"
+    ],
+    "renderer": "playcanvas",
+    "requiresFeatures": [
+      "local-floor"
+    ],
+    "license": "MIT (viewer); splat content is the author's, non-commercial",
+    "verifiedAt": "2026-09-22",
+    "thumbnail": "/gallery/supersplat-micro-pc.jpg",
+    "notes": "Confirmed via playcanvas/supersplat-viewer src/xr.ts (xr.start(..., 'immersive-ar', 'local-floor')) and 6 'immersive-ar' hits in superspl.at/s/index.js. The &webgl flag is deliberate: the viewer defaults to WebGPU and its README says WebGL is required for AR. Headless with polyfill: #arIcon visible, no page errors. Heavy download (the scene page lists 182 MB)."
+  },
+  {
+    "id": "needle-physics-playground",
+    "title": "Physics Playground",
+    "author": "Needle",
+    "url": "https://physics-playground-zubcksgtkqf.needle.run/",
+    "sourceUrl": "https://engine.needle.tools/samples/physics-playground",
+    "description": "A tabletop of blocks, balls, a paddle and toys driven by real-time rigid-body physics. Place it on a surface in AR and drag or knock things over.",
+    "tags": [
+      "physics",
+      "game",
+      "hit-test"
+    ],
+    "renderer": "needle",
+    "requiresFeatures": [],
+    "license": "unknown",
+    "verifiedAt": "2026-09-22",
+    "thumbnail": "/gallery/needle-physics-playground.jpg",
+    "notes": "Needle menu shows 'Enter AR' under the polyfill (headless, no page errors). Bundle code: NeedleXRSession requests 'immersive-ar' with optionalFeatures [anchors, local-floor, layers, dom-overlay, hit-test, unbounded, hand-tracking], so nothing is required. Needle may prefer its iOS QuickLook path on iPhone user agents; confirm on device that Enter AR goes through WebXR."
+  },
+  {
+    "id": "needle-snow-globe",
+    "title": "Snow Globe",
+    "author": "Needle",
+    "url": "https://snowglobe-zubckszvui3a.needle.run/",
+    "sourceUrl": "https://engine.needle.tools/samples/snow-globe",
+    "description": "A glass snow globe with a tiny scene inside and falling snow particles. Place it in your room and shake it to stir the snow.",
+    "tags": [
+      "art",
+      "physics",
+      "hit-test"
+    ],
+    "renderer": "needle",
+    "requiresFeatures": [],
+    "license": "unknown",
+    "verifiedAt": "2026-09-22",
+    "thumbnail": "/gallery/needle-snow-globe.jpg",
+    "notes": "'Enter AR' visible under the polyfill, no page errors. Same Needle WebXR path as the other Needle entries (immersive-ar, all features optional). Uses transmission/refraction materials, so it is GPU-heavy on older iPhones."
+  },
+  {
+    "id": "needle-musical-instrument",
+    "title": "Musical Instrument",
+    "author": "Needle",
+    "url": "https://musicalinstrument-zubcksz1usd7h.needle.run/",
+    "sourceUrl": "https://engine.needle.tools/samples/musical-instrument",
+    "description": "A ring of glossy spheres that each play a note when tapped. Place it in AR and play melodies by touching the spheres.",
+    "tags": [
+      "art",
+      "audio",
+      "hit-test"
+    ],
+    "renderer": "needle",
+    "requiresFeatures": [],
+    "license": "unknown",
+    "verifiedAt": "2026-09-22",
+    "thumbnail": "/gallery/needle-musical-instrument.jpg",
+    "notes": "'Enter AR' visible under the polyfill, no page errors. Audio needs a user gesture, and the Enter AR tap provides one. Same Needle WebXR path (immersive-ar, all features optional)."
+  },
+  {
+    "id": "needle-collaborative-sandbox",
+    "title": "Collaborative Sandbox",
+    "author": "Needle",
+    "url": "https://collaborativesandbox-zubcks1qdkhy.needle.run/",
+    "sourceUrl": "https://engine.needle.tools/samples/collaborative-sandbox",
+    "description": "A shared desert diorama where everyone in the same room link can spawn and move objects together in real time. Place it in AR and build with friends on other devices.",
+    "tags": [
+      "multiplayer",
+      "game",
+      "hit-test"
+    ],
+    "renderer": "needle",
+    "requiresFeatures": [],
+    "license": "unknown",
+    "verifiedAt": "2026-09-22",
+    "thumbnail": "/gallery/needle-collaborative-sandbox.jpg",
+    "notes": "'Enter AR' visible under the polyfill, no page errors. Joins a networked room over Needle's WebSocket server automatically, and the URL gains a ?room= parameter. Same Needle WebXR path (immersive-ar, all features optional)."
+  },
+  {
+    "id": "needle-diamond-ring",
+    "title": "Diamond Ring",
+    "author": "Needle",
+    "url": "https://jewelry-ring-zubckszopxdy.needle.run/",
+    "sourceUrl": "https://engine.needle.tools/samples/diamond-ring",
+    "description": "A gold ring on a display stand, with refractive diamond and gem materials. Swap gems and view the piece at real size in AR.",
+    "tags": [
+      "product",
+      "model-viewer",
+      "hit-test"
+    ],
+    "renderer": "needle",
+    "requiresFeatures": [],
+    "license": "unknown",
+    "verifiedAt": "2026-09-22",
+    "thumbnail": "/gallery/needle-diamond-ring.jpg",
+    "notes": "'Enter AR' visible under the polyfill, no page errors. Diamond refraction shaders are GPU-heavy. Same Needle WebXR path (immersive-ar, all features optional)."
+  },
+  {
+    "id": "playcanvas-ar-starter",
+    "title": "WebXR AR Starter Kit",
+    "author": "PlayCanvas",
+    "url": "https://playcanv.as/p/AOYF3YyG/",
+    "sourceUrl": null,
+    "description": "PlayCanvas's official AR template: place a textured crate with hit-test, lit by estimated real-world light, with ammo.js physics. Tap the AR toggle to start.",
+    "tags": [
+      "hit-test",
+      "lighting",
+      "physics"
+    ],
+    "renderer": "playcanvas",
+    "requiresFeatures": [
+      "hit-test"
+    ],
+    "license": "unknown",
+    "verifiedAt": "2026-09-22",
+    "thumbnail": "/gallery/playcanvas-ar-starter.jpg",
+    "notes": "The page is a wrapper with an iframe (allow includes xr-spatial-tracking) to playcanv.as/apps/eb8538b9/. Its __game-scripts.js checks app.xr.isAvailable(pc.XRTYPE_AR) and uses app.xr.lightEstimation. Under the polyfill the 'AR toggle' button is shown, no page errors. HoloWeb must inject the polyfill into sub-frames (Playwright's addInitScript covers all frames). No public source link found."
+  },
+  {
+    "id": "model-viewer-ar",
+    "title": "model-viewer Augmented Reality examples",
+    "author": "Google (model-viewer)",
+    "url": "https://modelviewer.dev/examples/augmentedreality/",
+    "sourceUrl": "https://github.com/google/model-viewer",
+    "description": "The official <model-viewer> AR gallery: chairs, astronauts and wall art with a 'View in your space' button, including a custom WebXR DOM-overlay demo. Tap the button to place a model at real scale.",
+    "tags": [
+      "model-viewer",
+      "product",
+      "hit-test",
+      "dom-overlay"
+    ],
+    "renderer": "model-viewer",
+    "requiresFeatures": [
+      "hit-test"
+    ],
+    "license": "Apache-2.0",
+    "verifiedAt": "2026-09-22",
+    "thumbnail": "/gallery/model-viewer-ar.jpg",
+    "notes": "The page has several <model-viewer ar> elements. Default ar-modes is 'webxr scene-viewer quick-look', so WebXR wins when navigator.xr reports immersive-ar. One example deliberately uses ar-modes='scene-viewer quick-look' and will not use HoloWeb. Headless with polyfill: AR buttons render, no page errors."
+  },
+  {
+    "id": "aframe-model-viewer",
+    "title": "A-Frame Model Viewer",
+    "author": "A-Frame",
+    "url": "https://aframe.io/aframe/examples/showcase/model-viewer/",
+    "sourceUrl": "https://github.com/aframevr/aframe/tree/master/examples/showcase/model-viewer",
+    "description": "An animated triceratops with soft AR shadows. You can paste or drop any glTF URL to swap the model, then place it on the floor in AR.",
+    "tags": [
+      "model-viewer",
+      "hit-test",
+      "lighting",
+      "education"
+    ],
+    "renderer": "a-frame",
+    "requiresFeatures": [],
+    "license": "MIT",
+    "verifiedAt": "2026-09-22",
+    "thumbnail": "/gallery/aframe-model-viewer.jpg",
+    "notes": "model-viewer.js sets webxr optionalFeatures 'hit-test, local-floor, light-estimation, anchors' plus ar-hit-test. The AR button renders under the polyfill. Known issue: with the polyfill, A-Frame 1.8 calls navigator.xr.offerSession('immersive-vr') at load because xr-mode-ui is XRMode: xr. The rejection is unhandled and logs 'Failed to enter VR mode (requestSession)'. This does not happen without the polyfill. HoloWeb should either not expose offerSession or resolve it quietly."
+  },
+  {
+    "id": "three-xr-ballshooter",
+    "title": "three.js Ball Shooter",
+    "author": "three.js",
+    "url": "https://threejs.org/examples/webxr_xr_ballshooter.html",
+    "sourceUrl": "https://github.com/mrdoob/three.js/blob/dev/examples/webxr_xr_ballshooter.html",
+    "description": "A wireframe room full of hundreds of bouncing coloured balls. In AR, each tap fires more balls into your space.",
+    "tags": [
+      "physics",
+      "game"
+    ],
+    "renderer": "three.js",
+    "requiresFeatures": [],
+    "license": "MIT",
+    "verifiedAt": "2026-09-22",
+    "thumbnail": "/gallery/three-xr-ballshooter.jpg",
+    "notes": "Uses XRButton, which requests 'immersive-ar' first and falls back to VR. The polyfill shows 'START XR'. depth-sensing is optional, which HoloWeb does not support. Designed for controllers: on a phone, screen taps act as the select source."
+  },
+  {
+    "id": "three-ar-lighting",
+    "title": "three.js AR Lighting Estimation",
+    "author": "three.js",
+    "url": "https://threejs.org/examples/webxr_ar_lighting.html",
+    "sourceUrl": "https://github.com/mrdoob/three.js/blob/dev/examples/webxr_ar_lighting.html",
+    "description": "A grid of chrome-to-matte spheres that pick up real-world lighting and reflections through light estimation. Move between bright and dim spots to watch them respond.",
+    "tags": [
+      "lighting"
+    ],
+    "renderer": "three.js",
+    "requiresFeatures": [],
+    "license": "MIT",
+    "verifiedAt": "2026-09-22",
+    "thumbnail": "/gallery/three-ar-lighting.jpg",
+    "notes": "ARButton with optionalFeatures ['light-estimation'] and XREstimatedLight. The polyfill shows 'START AR', no page errors. It exercises HoloWeb's light-estimation path, including the reflection cube map, which is worth checking on device."
+  },
+  {
+    "id": "babylon-measure-tape",
+    "title": "XR Measurement Tape",
+    "author": "Raanan Weber (Babylon.js)",
+    "url": "https://playground.babylonjs.com/full.html#GG06BQ#97",
+    "sourceUrl": "https://playground.babylonjs.com/#GG06BQ#97",
+    "description": "A working AR tape measure. Tap to drop points on real surfaces and floating labels show the distance between them.",
+    "tags": [
+      "hit-test",
+      "anchors",
+      "education",
+      "utility"
+    ],
+    "renderer": "babylon.js",
+    "requiresFeatures": [
+      "hit-test",
+      "anchors"
+    ],
+    "license": "Apache-2.0 (Babylon.js); playground snippet unlicensed",
+    "verifiedAt": "2026-09-22",
+    "thumbnail": null,
+    "notes": "Snippet code calls createDefaultXRExperienceAsync({ sessionMode: 'immersive-ar' }) and enables WebXRHitTest, WebXRAnchorSystem and WebXRBackgroundRemover. Babylon marks enabled features as required. The Babylon goggles button (title 'immersive-ar - local-floor') renders under the polyfill, no page errors. Thumbnail is null because the pre-AR page is an empty dark canvas."
+  },
+  {
+    "id": "toji-webxr-particles",
+    "title": "WebXR Particles",
+    "author": "Brandon Jones (Toji)",
+    "url": "https://toji.github.io/webxr-particles/",
+    "sourceUrl": "https://github.com/toji/webxr-particles",
+    "description": "Tens of thousands of GPU particles spell 'WebXR' and swirl around you. In AR the cloud floats in your room and scatters as you move through it.",
+    "tags": [
+      "art",
+      "particles"
+    ],
+    "renderer": "three.js",
+    "requiresFeatures": [
+      "local-floor"
+    ],
+    "license": "MIT",
+    "verifiedAt": "2026-09-22",
+    "thumbnail": "/gallery/toji-webxr-particles.jpg",
+    "notes": "Source creates a separate button with mode 'immersive-ar', sessionInit requiredFeatures ['local-floor']. The polyfill shows 'ENTER AR', no page errors. It uses an old three.js (renderer.vr API) and is controller-oriented, so on-device behaviour needs a check. The particle count is heavy for older iPhones."
+  },
+  {
+    "id": "iw-hit-test",
+    "title": "Immersive Web Hit Test",
+    "author": "W3C Immersive Web Working Group",
+    "url": "https://immersive-web.github.io/webxr-samples/hit-test.html",
+    "sourceUrl": "https://github.com/immersive-web/webxr-samples",
+    "description": "The reference hit-test sample: a reticle tracks real surfaces and each tap plants a sunflower where you point.",
+    "tags": [
+      "hit-test",
+      "reference"
+    ],
+    "renderer": "raw webgl",
+    "requiresFeatures": [
+      "local",
+      "hit-test"
+    ],
+    "license": "MIT",
+    "verifiedAt": "2026-09-22",
+    "thumbnail": null,
+    "notes": "requestSession('immersive-ar', {requiredFeatures: ['local', 'hit-test']}). The polyfill shows 'START AR', no page errors. Thumbnail is null because the pre-AR page is only a text card."
+  },
+  {
+    "id": "iw-webgpu-ar",
+    "title": "Immersive Web AR Session (WebGPU)",
+    "author": "W3C Immersive Web Working Group",
+    "url": "https://immersive-web.github.io/webxr-samples/webgpu/immersive-ar-session.html",
+    "sourceUrl": "https://github.com/immersive-web/webxr-samples",
+    "description": "The reference WebGPU AR sample: a scaled-down 3D model rendered through XRGPUBinding and composited over the camera feed.",
+    "tags": [
+      "webgpu",
+      "reference"
+    ],
+    "renderer": "other",
+    "requiresFeatures": [
+      "webgpu"
+    ],
+    "license": "MIT",
+    "verifiedAt": "2026-09-22",
+    "thumbnail": null,
+    "notes": "requestSession('immersive-ar', {requiredFeatures: ['webgpu']}) then new XRGPUBinding. This is the direct test of HoloWeb's XRGPUBinding polyfill. Renderer is raw WebGPU (listed as 'other'). The polyfill shows 'START AR', no page errors. Thumbnail is null because the pre-AR page is only a text card."
+  }
+]

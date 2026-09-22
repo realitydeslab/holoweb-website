@@ -1,0 +1,70 @@
+.page {
+  max-width: 620px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  padding-top: calc(env(safe-area-inset-top) + 32px);
+  padding-bottom: 32px;
+}
+
+.brand {
+  font-size: 44px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-decoration: none;
+  align-self: flex-start;
+}
+
+.panel {
+  --c: var(--muted);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px 24px;
+  background-color: color-mix(in srgb, var(--surface) 70%, transparent);
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.origin {
+  margin: 0;
+  font-size: clamp(20px, 5.4vw, 28px);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.match {
+  margin: 0;
+  font-size: 17px;
+}
+
+.path {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.open {
+  margin-top: 12px;
+  align-self: stretch;
+}
+
+.note {
+  margin: 8px 0 0;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.note strong {
+  color: var(--ink);
+}
