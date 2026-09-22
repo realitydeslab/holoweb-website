@@ -1,21 +1,18 @@
 {
-  "appclips": {
-    "apps": [
-      "U3TS5VT3H8.org.realitydeslab.holoweb.Clip"
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["KR9H35SQQ9.org.realitydeslab.holoweb"],
+        "components": [
+          { "/": "/launch", "?": { "url": "?*" }, "comment": "holoweb.app/launch?url=<page>" },
+          { "/": "/launch/", "?": { "url": "?*" }, "comment": "trailing-slash variant from static export" },
+          { "/": "/c", "?": { "url": "?*" }, "comment": "holoweb.app/c?url=<page>" },
+          { "/": "/c/", "?": { "url": "?*" }, "comment": "trailing-slash variant from static export" }
+        ]
+      }
     ]
   },
-  "applinks": {
-      "details": [
-        {
-            "appIDs": ["U3TS5VT3H8.org.realitydeslab.holoweb"],
-            "components": [
-                {
-                    "/": "/launch",
-                    "?": { "url": "????" },
-                    "comment": "Matches any URL with a path that starts with /launch?url="
-                }
-            ]
-        }
-      ]
+  "appclips": {
+    "apps": ["KR9H35SQQ9.org.realitydeslab.holoweb.Clip"]
   }
 }
