@@ -1,10 +1,10 @@
 // Browser-safe helpers shared by server and client components (no fs imports here).
 
 /** Canonical origin for links that leave the site (QR codes, copied links). App Clip invocation needs this domain. */
-export const SITE_ORIGIN = "https://holoweb.app";
+export const SITE_ORIGIN = "https://web.holokit.io";
 
 /** App Clip invocation link, the form for QR codes and sharing. The App Clip experience in
- *  App Store Connect is registered for the https://holoweb.app/c prefix, so the camera shows the
+ *  App Store Connect is registered for the https://web.holokit.io/c prefix, so the camera shows the
  *  App Clip card for these; /launch links only work as taps. */
 export function appClipUrl(url: string): string {
   return `${SITE_ORIGIN}/c?url=${encodeURIComponent(url)}`;
@@ -25,7 +25,7 @@ export function hues(id: string): [number, number] {
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
-/** Prefixes a site-absolute path with the deploy base path (empty on holoweb.app). */
+/** Prefixes a site-absolute path with the deploy base path (empty on web.holokit.io). */
 export function sitePath(p: string): string {
   return p.startsWith("/") ? `${BASE}${p}` : p;
 }

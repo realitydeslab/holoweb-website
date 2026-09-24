@@ -39,7 +39,7 @@ export function LaunchView({ target, known, shareUrl, appClipCode }: ViewProps) 
         <h1 className={s.title}>This link has no page to open</h1>
         <p className={s.note}>
           A HoloWeb link needs a <code className="mono">url</code> parameter with a full https:// address, like{" "}
-          <span className={`mono ${s.path}`}>holoweb.app/c?url=https%3A%2F%2Fexample.com%2Far.html</span>.
+          <span className={`mono ${s.path}`}>web.holokit.io/c?url=https%3A%2F%2Fexample.com%2Far.html</span>.
         </p>
       </Shell>
     );

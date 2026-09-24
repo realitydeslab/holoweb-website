@@ -57,9 +57,9 @@ export default function Home() {
               <code className="mono">navigator.xr</code> works in HoloWeb, with no SDK and no changes to the page. Share
               it with a link in this format:
             </p>
-            <p className="code">holoweb.app/c?url=&lt;percent-encoded page URL&gt;</p>
+            <p className="code">web.holokit.io/c?url=&lt;percent-encoded page URL&gt;</p>
             <p>
-              Scanning it as a QR code opens the App Clip. <span className="mono">holoweb.app/launch?url=</span> works
+              Scanning it as a QR code opens the App Clip. <span className="mono">web.holokit.io/launch?url=</span> works
               the same way for links people tap.
             </p>
             <p>
