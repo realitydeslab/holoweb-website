@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   other: {
     // Smart banner that shows the App Clip card in Safari on iPhone.
     "apple-itunes-app":
-      "app-id=org.realitydeslab.holoweb, app-clip-bundle-id=org.realitydeslab.holoweb.Clip, app-clip-display=card",
+      "app-id=6815450023, app-clip-bundle-id=org.realitydeslab.holoweb.Clip, app-clip-display=card",
   },
 };
 
