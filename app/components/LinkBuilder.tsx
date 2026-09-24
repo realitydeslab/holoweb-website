@@ -6,7 +6,7 @@ import { qrPath } from "@/lib/qr";
 import QrCode from "./QrCode";
 import s from "./LinkBuilder.module.css";
 
-/** Turns a page URL into a web.holokit.io/launch link. */
+/** Turns a page URL into a holoweb.app/launch link. */
 export default function LinkBuilder() {
   const [url, setUrl] = useState("");
   const [copied, setCopied] = useState(false);

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-/** A permanent short link, https://web.holokit.io/c/<code>, sized for App Clip Codes.
+/** A permanent short link, https://holoweb.app/c/<code>, sized for App Clip Codes.
  *  Codes are printed on physical App Clip Codes, so never reuse or renumber one: append new codes,
  *  and keep the target URL here even if the entry leaves the gallery. */
 export type ShortLink = { code: string; id: string; url: string };
