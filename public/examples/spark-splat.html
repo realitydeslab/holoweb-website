@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <title>HoloWeb Gaussian splats (Spark)</title>
+    <style>
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #111; }
+      body.xr { background: transparent; } /* camera feed shows through in AR */
+      #start { position: absolute; inset: auto 0 12% 0; margin: auto; width: 220px; padding: 14px; font: 600 16px system-ui;
+               color: #fff; background: #0af; border: 0; border-radius: 12px; }
+      #start:disabled { background: #456; }
+      #status { position: absolute; top: env(safe-area-inset-top, 8px); left: 12px; font: 13px ui-monospace, monospace;
+                color: #9cf; pointer-events: none; }
+      #picker { position: absolute; bottom: 4%; left: 0; right: 0; display: flex; flex-wrap: wrap; gap: 6px;
+                justify-content: center; padding: 0 12px; }
+      #picker button { font: 13px system-ui; color: #cde; background: #223; border: 1px solid #456; border-radius: 8px;
+                       padding: 6px 10px; }
+      #picker button.on { color: #fff; background: #0af; border-color: #0af; }
+      body.xr #picker { display: none; }
+    </style>
+    <script type="importmap">
+      { "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/",
+          "@sparkjsdev/spark": "https://cdn.jsdelivr.net/npm/@sparkjsdev/spark@2.2.0/dist/spark.module.js" } }
+    </script>
+  </head>
+  <body>
+    <div id="status">loading splat…</div>
+    <button id="start" disabled>Start AR</button>
+    <div id="picker"></div>
+    <script type="module">
+      // Runs in the HoloWeb app, which injects the WebXR polyfill (Safari on iOS has no WebXR).
+      // 3D Gaussian splats rendered by Spark (World Labs, WebGL2), placed ~1 m in front of the viewer at session
+      // start, no surface needed. Objects are the ones from Spark's official examples, loaded from sparkjs.dev
+      // (1–5 MB each; not bundled, the App Clip must stay under 15 MB). Pick one before AR; in AR a screen tap
+      // (mono) or a pinch (HoloKit stereo) switches to the next. Stereo uses additive blending, so the object
+      // floats in the room without a background.
+      // Params: ?i=<index> first object, ?url=<.spz|.ply|.splat|.ksplat|.sog>&size=<m> a custom splat,
+      // ?base=<url> another folder with the same file names (e.g. a local copy), ?autostart (test aid),
+      // ?bench (test aid: enters AR, then per object 3 s warm-up + 8 s mono + 8 s stereo; logs `[spark-bench]` JSON).
+      import * as THREE from 'three';
+      import { SparkRenderer, SplatMesh } from '@sparkjsdev/spark';
+
+      const params = new URLSearchParams(location.search);
+      const base = params.get('base') ?? 'https://sparkjs.dev/assets/splats/';
+      // size = longest side in metres
+      const catalog = params.has('url')
+        ? [{ name: 'custom', url: params.get('url'), size: Number(params.get('size') ?? 0.4) }]
+        : [
+            { name: 'butterfly', file: 'butterfly.spz', size: 0.4 },
+            { name: 'penguin', file: 'penguin.spz', size: 0.4 },
+            { name: 'cat', file: 'cat.spz', size: 0.5 },
+            { name: 'robot head', file: 'robot-head.spz', size: 0.35 },
+            { name: 'dessert', file: 'dessert.spz', size: 0.3 },
+            { name: 'burger', file: 'food/burger-from-amboy.spz', size: 0.25 },
+            { name: 'pad thai', file: 'food/pad-thai.spz', size: 0.3 },
+          ].map((e) => ({ ...e, url: new URL(e.file, new URL(base, location.href)).href }));
+
+      const status = document.getElementById('status');
+      const startButton = document.getElementById('start');
+      const picker = document.getElementById('picker');
+
+      const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+      renderer.setPixelRatio(devicePixelRatio);
+      renderer.setSize(innerWidth, innerHeight);
+      renderer.xr.enabled = true;
+      renderer.xr.setReferenceSpaceType('local');
+      document.body.appendChild(renderer.domElement);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.01, 100);
+      scene.add(new SparkRenderer({ renderer }));
+
+      // The splat hangs off a stage that is placed in front of the viewer when AR starts; before that the
+      // page shows it as a normal 3D view so the load can be checked while browsing.
+      const stage = new THREE.Group();
+      stage.position.set(0, 0, -1);
+      scene.add(stage);
+
+      let current = null, index = -1, splatCount = 0, loadSeq = 0;
+      async function show(i) {
+        index = (i + catalog.length) % catalog.length;
+        const entry = catalog[index];
+        const seq = ++loadSeq;
+        [...picker.children].forEach((b, k) => b.classList.toggle('on', k === index));
+        status.textContent = `loading ${entry.name}…`;
+        const t0 = performance.now();
+        const splat = new SplatMesh({ url: entry.url });
+        splat.quaternion.set(1, 0, 0, 0); // captures are stored y-down
+        try {
+          await splat.initialized;
+        } catch (e) {
+          status.textContent = `${entry.name}: load failed (${e.message})`;
+          console.error(`[spark] load failed ${entry.url}: ${e.message}`);
+          return;
+        }
+        if (seq !== loadSeq) { splat.dispose(); return; } // a newer pick won
+        const box = splat.getBoundingBox(true);
+        const extent = box.getSize(new THREE.Vector3());
+        const scale = entry.size / Math.max(extent.x, extent.y, extent.z, 1e-6);
+        splat.scale.setScalar(scale);
+        splat.position.copy(box.getCenter(new THREE.Vector3()).applyQuaternion(splat.quaternion).multiplyScalar(-scale));
+        if (current) { stage.remove(current); current.dispose(); }
+        stage.add(splat);
+        current = splat;
+        splatCount = splat.packedSplats?.numSplats ?? 0;
+        const ms = Math.round(performance.now() - t0);
+        status.textContent = `${entry.name}: ${splatCount.toLocaleString()} splats, ${entry.size} m`;
+        entry.loadMs = ms;
+        console.log(`[spark] loaded ${entry.name} splats=${splatCount} ms=${ms}`);
+        if (!startButton.dataset.noxr) startButton.disabled = false;
+      }
+
+      catalog.forEach((entry, k) => {
+        const b = document.createElement('button');
+        b.textContent = entry.name;
+        b.addEventListener('click', () => show(k));
+        picker.appendChild(b);
+      });
+      show(Number(params.get('i') ?? 0)).then(() => {
+        if (params.has('bench')) bench().catch((e) => console.error('[spark-bench] failed: ' + e.message));
+        else if (params.has('autostart')) start().catch((e) => console.error('autostart failed: ' + e.message));
+      });
+
+      const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+      async function measure() {
+        frameTimes.length = 0;
+        await sleep(8000);
+        const d = [...frameTimes].sort((a, b) => a - b);
+        const q = (p) => +(d[Math.min(d.length - 1, Math.floor(p * d.length))] ?? 0).toFixed(1);
+        const total = d.reduce((a, b) => a + b, 0);
+        return { fps: +(d.length / (total / 1000)).toFixed(1), p50: q(0.5), p95: q(0.95), max: q(1),
+                 slow: +(d.filter((x) => x > 20).length / Math.max(1, d.length) * 100).toFixed(1) };
+      }
+      let benchRunning = false;
+      async function bench() {
+        benchRunning = true;
+        await start();
+        const results = [];
+        for (let k = 0; k < catalog.length; k++) {
+          await globalThis.__holoweb?.setMode?.('mono');
+          await show(k);
+          await sleep(3000);
+          const mono = await measure();
+          await globalThis.__holoweb?.setMode?.('stereo');
+          await sleep(1500);
+          const stereo = await measure();
+          const r = { name: catalog[k].name, splats: splatCount, loadMs: catalog[k].loadMs, mono, stereo };
+          results.push(r);
+          console.log('[spark-bench] ' + JSON.stringify(r));
+        }
+        await globalThis.__holoweb?.setMode?.('mono');
+        benchRunning = false;
+        console.log('[spark-bench] done ' + JSON.stringify({ ua: navigator.userAgent, dpr: devicePixelRatio,
+          canvas: [renderer.domElement.width, renderer.domElement.height], results }));
+      }
+
+      let placed = false;
+      renderer.xr.addEventListener('sessionstart', () => {
+        placed = false;
+        startButton.style.display = 'none';
+        document.body.classList.add('xr');
+        renderer.xr.getSession().addEventListener('select', (e) => {
+          console.log(`[spark] select from ${e.inputSource?.targetRayMode}/${e.inputSource?.handedness}${benchRunning ? ' (ignored: bench)' : ''}`);
+          if (!benchRunning) show(index + 1);
+        });
+      });
+      renderer.xr.addEventListener('sessionend', () => {
+        startButton.style.display = '';
+        document.body.classList.remove('xr');
+        stage.position.set(0, 0, -1);
+      });
+
+      const clock = new THREE.Clock();
+      const forward = new THREE.Vector3();
+      let frames = 0, lastT = 0;
+      const frameTimes = []; // ms between XR frames, collected while benchmarking
+      renderer.setAnimationLoop((t) => {
+        frames++;
+        if (renderer.xr.isPresenting && lastT) frameTimes.push(t - lastT);
+        lastT = renderer.xr.isPresenting ? t : 0;
+        if (renderer.xr.isPresenting && !placed) {
+          const xrCamera = renderer.xr.getCamera();
+          xrCamera.getWorldDirection(forward);
+          forward.y = 0;
+          forward.normalize();
+          stage.position.copy(xrCamera.position).addScaledVector(forward, 1.0);
+          stage.position.y = xrCamera.position.y - 0.1;
+          placed = true;
+        }
+        stage.rotation.y = clock.getElapsedTime() * 0.3;
+        renderer.render(scene, camera);
+      });
+
+      async function start() {
+        const session = await navigator.xr.requestSession('immersive-ar', { optionalFeatures: ['local'] });
+        await renderer.xr.setSession(session);
+      }
+      if (!navigator.xr) {
+        startButton.textContent = 'Open in HoloWeb for AR';
+        startButton.disabled = true;
+        startButton.dataset.noxr = '1';
+      }
+      startButton.addEventListener('click', () => start().catch((e) => console.error('start failed: ' + e.message)));
+
+      addEventListener('resize', () => {
+        if (renderer.xr.isPresenting) return;
+        camera.aspect = innerWidth / innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(innerWidth, innerHeight);
+      });
+
+      setInterval(() => {
+        const views = renderer.xr.isPresenting ? renderer.xr.getCamera().cameras.length : 0;
+        const fps = (frames / 3).toFixed(1);
+        frames = 0;
+        const name = catalog[index]?.name ?? '-';
+        if (renderer.xr.isPresenting) status.textContent = `${name} · ${splatCount.toLocaleString()} splats · ${fps} fps · ${views} view(s)`;
+        console.log(`[spark] presenting=${renderer.xr.isPresenting} views=${views} fps=${fps} splat=${name} splats=${splatCount} placed=${placed}`);
+      }, 3000);
+    </script>
+  </body>
+</html>

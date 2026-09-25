@@ -296,5 +296,26 @@
     "verifiedAt": "2026-09-22",
     "thumbnail": null,
     "notes": "requestSession('immersive-ar', {requiredFeatures: ['webgpu']}) then new XRGPUBinding. This is the direct test of HoloWeb's XRGPUBinding polyfill. Renderer is raw WebGPU (listed as 'other'). The polyfill shows 'START AR', no page errors. Thumbnail is null because the pre-AR page is only a text card."
+  },
+  {
+    "id": "spark-gaussian-splats",
+    "title": "Gaussian Splat Objects (Spark)",
+    "author": "HoloWeb; renderer and splats by World Labs (Spark)",
+    "url": "https://holoweb.app/examples/spark-splat.html",
+    "sourceUrl": "https://sparkjs.dev/",
+    "description": "Seven photoreal 3D Gaussian-splat objects (butterfly, penguin, cat, robot head, food) floating 1 m in front of you. Tap the screen, or pinch in HoloKit, for the next one.",
+    "tags": [
+      "gaussian-splats",
+      "three.js",
+      "holokit"
+    ],
+    "renderer": "three.js",
+    "requiresFeatures": [
+      "local"
+    ],
+    "license": "MIT (Spark); splats from Spark's examples, loaded from sparkjs.dev",
+    "verifiedAt": "2026-09-25",
+    "thumbnail": "/gallery/spark-gaussian-splats.jpg",
+    "notes": "Spark 2.2.0 + three r180 (WebGL2). iPhone 15 Pro: 60 fps mono and stereo up to ~180K splats; cat/dessert (~205K) 43-57 fps. ?bench logs per-object FPS; ?url=&size= loads any splat."
   }
 ]

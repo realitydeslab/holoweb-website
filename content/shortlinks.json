@@ -58,5 +58,9 @@
   "15": {
     "id": "iw-webgpu-ar",
     "url": "https://immersive-web.github.io/webxr-samples/webgpu/immersive-ar-session.html"
+  },
+  "16": {
+    "id": "spark-gaussian-splats",
+    "url": "https://holoweb.app/examples/spark-splat.html"
   }
 }
