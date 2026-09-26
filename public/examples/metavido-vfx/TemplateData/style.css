@@ -1,0 +1,21 @@
+html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #000; color: #eee;
+  font: 15px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+#unity-canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; background: #000; outline: none; }
+#overlay { position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: space-between;
+  pointer-events: none; padding: max(16px, env(safe-area-inset-top)) 16px max(20px, env(safe-area-inset-bottom)); }
+#overlay > * { pointer-events: auto; }
+#info { max-width: 34em; }
+#info h1 { margin: 0 0 4px; font-size: 20px; font-weight: 600; letter-spacing: 0.02em; }
+#info p { margin: 0; color: #aaa; font-size: 13px; }
+a { color: #8cf; }
+#controls { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+#status { font-size: 13px; color: #ddd; text-align: center; }
+#info, #status { text-shadow: 0 1px 3px #000, 0 0 12px #000; }
+button { font: inherit; font-size: 16px; font-weight: 600; letter-spacing: 0.04em; color: #000; background: #fff;
+  border: 0; border-radius: 999px; padding: 12px 34px; cursor: pointer; }
+button:active { transform: scale(0.97); }
+html.holoxr-active #overlay { display: none; }
+/* MetavidoVFX draws its own UI top-left (metadata) and bottom-right (video monitor): keep the page text low and centred. */
+#overlay { justify-content: flex-end; padding-bottom: max(112px, env(safe-area-inset-bottom)); }
+#info { order: 2; max-width: 30em; margin: 12px auto 0; text-align: center; }
+#info h1 { font-size: 17px; }

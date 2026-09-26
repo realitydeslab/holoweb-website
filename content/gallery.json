@@ -337,8 +337,32 @@
       "webgpu"
     ],
     "license": "unknown (keijiro/SdfVfxSamples has no license file)",
-    "verifiedAt": "2026-09-26",
+    "verifiedAt": "2026-09-27",
     "thumbnail": "/gallery/sdf-vfx-trails.jpg",
-    "notes": "Unity 6000.3.24f1 Web build, WebGPU only (VFX Graph needs compute; De-Panther's WebXR Export is WebGL2-only). A small bridge (holoxr.js + HoloXR.jslib + HoloXRCamera.cs) runs Unity's main loop in XRSession.requestAnimationFrame and blits Unity's canvas into the XRGPUBinding layer with alpha = max(rgb). Headless Chromium 153 and WebKit 26.6 with the polyfill mock: mono, stereo, stereo->mono, tap-to-place and exit all pass. Not yet timed on an iPhone. ?scale=&dist=&res=&black=&bloom= tune world scale, distance, render scale and the XR look."
+    "notes": "Unity 6000.3.24f1 Web build, WebGPU only (VFX Graph needs compute; De-Panther's WebXR Export is WebGL2-only). A small bridge (holoxr.js + HoloXR.jslib + HoloXRCamera.cs) runs Unity's main loop in XRSession.requestAnimationFrame and blits Unity's canvas into the XRGPUBinding layer with alpha = max(rgb). iPhone 15 Pro (iOS 27.0, HoloWeb): 60 fps mono and HoloKit stereo, render 1917x884 (res 0.75). Headless Chromium 153 and WebKit 26.6 with the polyfill mock: mono, stereo, stereo->mono, tap-to-place, exit and a second session started in stereo all pass. ?scale=&dist=&res=&black=&bloom= tune world scale, distance, render scale and the XR look."
+  },
+  {
+    "id": "metavido-vfx",
+    "title": "Metavido VFX (Unity WebGPU)",
+    "author": "HoloWeb; effect by Keijiro Takahashi (MetavidoVFX)",
+    "url": "https://holoweb.app/examples/metavido-vfx/",
+    "sourceUrl": "https://github.com/keijiro/MetavidoVFX",
+    "description": "A Taipei street captured as volumetric video on an iPhone, replayed as a tabletop diorama of VFX Graph particles, voxels and ribbons inside the recording camera's frustum. A Unity 6.3 build on WebGPU: tap, or pinch in HoloKit, to place it where you look.",
+    "tags": [
+      "unity",
+      "webgpu",
+      "volumetric-video",
+      "particles",
+      "art",
+      "holokit"
+    ],
+    "renderer": "unity",
+    "requiresFeatures": [
+      "webgpu"
+    ],
+    "license": "unknown (keijiro/MetavidoVFX has no license file; the Metavido package is Unlicense)",
+    "verifiedAt": "2026-09-27",
+    "thumbnail": "/gallery/metavido-vfx.jpg",
+    "notes": "Unity 6000.3.24f1 Web build, WebGPU only, same HoloXR bridge as sdf-vfx-trails. The 1920x1080 H.264 Metavido clip streams from keijiro's Hugging Face repo (plays at keijiro's 0.5x speed); ?source=<VP9 URL> and ?lite=1 pass through. iOS uses the lite renderer automatically. In XR the XR origin follows the camera rig (data-follow=rig) at 1/4 scale, 1 m ahead, and the zoomed-out diorama view is forced. iPhone 15 Pro (iOS 27.0, HoloWeb): 60 fps mono and HoloKit stereo, video playing (readyState 4), no page errors. Headless Chromium (VP9) and WebKit: all e2e checks pass."
   }
 ]

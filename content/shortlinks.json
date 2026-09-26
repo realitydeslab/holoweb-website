@@ -66,5 +66,9 @@
   "17": {
     "id": "sdf-vfx-trails",
     "url": "https://holoweb.app/examples/sdf-vfx-trails/"
+  },
+  "18": {
+    "id": "metavido-vfx",
+    "url": "https://holoweb.app/examples/metavido-vfx/"
   }
 }
