@@ -62,5 +62,9 @@
   "16": {
     "id": "spark-gaussian-splats",
     "url": "https://holoweb.app/examples/spark-splat.html"
+  },
+  "17": {
+    "id": "sdf-vfx-trails",
+    "url": "https://holoweb.app/examples/sdf-vfx-trails/"
   }
 }

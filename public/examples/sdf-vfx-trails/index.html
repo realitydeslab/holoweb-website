@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>SdfVfxTrails | Unity WebGPU + WebXR</title>
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="TemplateData/holoxr.js"></script>
+  </head>
+  <body>
+    <canvas id="unity-canvas" tabindex="-1" style="position: fixed; left: 0; top: 0; width: 100%; height: 100%; display: block;"></canvas>
+    <div id="overlay">
+      <div id="info">
+        <h1>SdfVfxTrails</h1>
+        <p>VFX Graph trails around a signed distance field, by <a href="https://github.com/keijiro/SdfVfxSamples">Keijiro Takahashi</a>. Unity 6.3 Web build on WebGPU, running in AR through WebXR.</p>
+      </div>
+      <div id="controls">
+        <div id="status">Loading… 0%</div>
+        <button id="enter-ar" hidden>Start AR</button>
+        <button id="enter-vr" hidden>Start VR</button>
+      </div>
+    </div>
+    <script src="Build/SdfVfxTrails.loader.js"></script>
+    <script>
+      (function () {
+        var canvas = document.getElementById('unity-canvas');
+        var status = document.getElementById('status');
+        var buttons = { 'immersive-ar': document.getElementById('enter-ar'), 'immersive-vr': document.getElementById('enter-vr') };
+        var loaded = false;
+        HoloXR.setCanvas(canvas);
+
+        function refresh() {
+          var s = HoloXR.status();
+          if (!loaded) return;
+          Promise.all([HoloXR.supported('immersive-ar'), HoloXR.supported('immersive-vr')]).then(function (r) {
+            buttons['immersive-ar'].hidden = !(s.ready && r[0]);
+            buttons['immersive-vr'].hidden = !(s.ready && r[1] && !r[0]);
+            if (!navigator.gpu) status.textContent = 'This browser has no WebGPU.';
+            else if (!s.ready) status.textContent = 'Starting…';
+            else if (!r[0] && !r[1]) status.innerHTML = 'No WebXR + WebGPU here. Open this page in <a href="https://holoweb.app/">HoloWeb</a> on iPhone for AR.';
+            else status.textContent = 'Tap the screen in AR to re-place the trails.';
+          });
+        }
+
+        Object.keys(buttons).forEach(function (mode) {
+          buttons[mode].addEventListener('click', function () {
+            HoloXR.start(mode).catch(function (err) {
+              console.error(err);
+              status.textContent = 'Could not start ' + mode + ': ' + (err && err.message ? err.message : err);
+            });
+          });
+        });
+        HoloXR.onChange(refresh);
+        if (navigator.xr && navigator.xr.addEventListener) navigator.xr.addEventListener('devicechange', refresh);
+
+        if (!navigator.gpu) {
+          status.textContent = 'This browser has no WebGPU, which this Unity build needs.';
+          return;
+        }
+
+        createUnityInstance(canvas, {
+          arguments: [],
+          dataUrl: "Build/SdfVfxTrails.data.unityweb",
+          frameworkUrl: "Build/SdfVfxTrails.framework.js.unityweb",
+          codeUrl: "Build/SdfVfxTrails.wasm.unityweb",
+          streamingAssetsUrl: "StreamingAssets",
+          companyName: "DefaultCompany",
+          productName: "SdfVfxTrails",
+          productVersion: "0.1",
+          matchWebGLToCanvasSize: false, // holoxr.js sizes the canvas (page size, or the XR views)
+        }, function (progress) {
+          status.textContent = 'Loading… ' + Math.round(progress * 100) + '%';
+        }).then(function (instance) {
+          window.unityInstance = instance;
+          loaded = true;
+          refresh();
+        }).catch(function (message) {
+          status.textContent = String(message);
+        });
+      })();
+    </script>
+  </body>
+</html>

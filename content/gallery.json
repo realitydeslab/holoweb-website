@@ -317,5 +317,28 @@
     "verifiedAt": "2026-09-25",
     "thumbnail": "/gallery/spark-gaussian-splats.jpg",
     "notes": "Spark 2.2.0 + three r180 (WebGL2). iPhone 15 Pro: 60 fps mono and stereo up to ~180K splats; cat/dessert (~205K) 43-57 fps. ?bench logs per-object FPS; ?url=&size= loads any splat."
+  },
+  {
+    "id": "sdf-vfx-trails",
+    "title": "SDF VFX Trails (Unity WebGPU)",
+    "author": "HoloWeb; effect by Keijiro Takahashi (SdfVfxSamples)",
+    "url": "https://holoweb.app/examples/sdf-vfx-trails/",
+    "sourceUrl": "https://github.com/keijiro/SdfVfxSamples",
+    "description": "Thousands of glowing VFX Graph trails swarm around a teapot-shaped signed distance field, floating 1.2 m in front of you. A Unity 6.3 build on WebGPU: tap the screen, or pinch in HoloKit, to re-place it where you are looking.",
+    "tags": [
+      "unity",
+      "webgpu",
+      "particles",
+      "art",
+      "holokit"
+    ],
+    "renderer": "unity",
+    "requiresFeatures": [
+      "webgpu"
+    ],
+    "license": "unknown (keijiro/SdfVfxSamples has no license file)",
+    "verifiedAt": "2026-09-26",
+    "thumbnail": "/gallery/sdf-vfx-trails.jpg",
+    "notes": "Unity 6000.3.24f1 Web build, WebGPU only (VFX Graph needs compute; De-Panther's WebXR Export is WebGL2-only). A small bridge (holoxr.js + HoloXR.jslib + HoloXRCamera.cs) runs Unity's main loop in XRSession.requestAnimationFrame and blits Unity's canvas into the XRGPUBinding layer with alpha = max(rgb). Headless Chromium 153 and WebKit 26.6 with the polyfill mock: mono, stereo, stereo->mono, tap-to-place and exit all pass. Not yet timed on an iPhone. ?scale=&dist=&res=&black=&bloom= tune world scale, distance, render scale and the XR look."
   }
 ]
